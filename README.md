@@ -3,7 +3,6 @@
 A full-stack web application that uses an AI-powered voting model to recommend plants for improving indoor air quality. This project features a FastAPI backend, a front-end e-commerce site, and is deployed on Render.
 
 ---
-
 ## 🚀 Project Overview
 
 PureUP is designed to combat indoor air pollution by providing users with intelligent, data-driven plant recommendations. Users input their environmental data (like room size, light conditions, and current AQI), and the system's AI model suggests the most effective plants to purify their air.
