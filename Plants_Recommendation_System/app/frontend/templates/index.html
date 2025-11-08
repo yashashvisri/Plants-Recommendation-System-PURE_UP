@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Plant Recommendation Portal</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f3f3f3;
+      margin: 0;
+      padding: 0;
+    }
+    .top-right-box {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      padding: 20px;
+      width: 300px;
+    }
+    .top-right-box button {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 10px;
+      margin-top: 10px;
+      cursor: pointer;
+      width: 100%;
+      border-radius: 5px;
+    }
+    .top-right-box button:hover {
+      background-color: #218838;
+    }
+    .plant-list {
+      margin-top: 15px;
+    }
+    .plant-item {
+      margin: 5px 0;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="top-right-box">
+    <h4>Recommended Plants</h4>
+    <button onclick="fetchRecommendations()">Fetch your city data and get recommendations</button>
+
+    <div id="plants" class="plant-list"></div>
+
+    <a href="http://127.0.0.1:8050" target="_blank">
+      <button style="background-color:#007bff;">Go to Dashboard</button>
+    </a>
+  </div>
+
+  <script>
+    async function fetchRecommendations() {
+      const response = await fetch("/get_recommendations");
+      const data = await response.json();
+      const plantDiv = document.getElementById("plants");
+      plantDiv.innerHTML = "";
+      if (data && data.recommendations) {
+        data.recommendations.forEach((item, index) => {
+          const p = document.createElement("p");
+          p.className = "plant-item";
+          p.textContent = `${index + 1}. ${item.plant} (${(item.confidence * 100).toFixed(1)}%)`;
+          plantDiv.appendChild(p);
+        });
+      } else {
+        plantDiv.innerHTML = "<p>⚠️ No data found</p>";
+      }
+    }
+  </script>
+</body>
+</html>

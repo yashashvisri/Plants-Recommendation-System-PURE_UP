@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Plant Recommendation System</title>
+  <script>
+    async function getRecommendations() {
+      const input = {
+        "PM2_5": parseFloat(document.getElementById("pm25").value),
+        "PM10": parseFloat(document.getElementById("pm10").value),
+        "NO": parseFloat(document.getElementById("no").value),
+        "NO2": parseFloat(document.getElementById("no2").value),
+        "NOx": parseFloat(document.getElementById("nox").value),
+        "NH3": parseFloat(document.getElementById("nh3").value),
+        "CO": parseFloat(document.getElementById("co").value),
+        "SO2": parseFloat(document.getElementById("so2").value),
+        "O3": parseFloat(document.getElementById("o3").value),
+        "Benzene": parseFloat(document.getElementById("benzene").value),
+        "Toluene": parseFloat(document.getElementById("toluene").value),
+        "Xylene": parseFloat(document.getElementById("xylene").value),
+        "AQI": parseFloat(document.getElementById("aqi").value)
+};
+
+
+      const response = await fetch("https://fastapi-voting-based-model-api-for-plant.onrender.com/predict", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(input)
+      });
+
+      const data = await response.json();
+      const resultsDiv = document.getElementById("results");
+      resultsDiv.innerHTML = "<h3>Top 3 Recommended Plants:</h3>";
+      data.recommendations.forEach((plant, index) => {
+        resultsDiv.innerHTML += `<p>${index + 1}. ${plant.plant} (Confidence: ${plant.confidence})</p>`;
+      });
+    }
+  </script>
+</head>
+<body>
+  <h1>🌱 Plant Recommendation System</h1>
+  <form onsubmit="event.preventDefault(); getRecommendations();">
+    <label>PM2.5: <input id="pm25" required></label><br>
+    <label>PM10: <input id="pm10" required></label><br>
+    <label>NO: <input id="no" required></label><br>
+    <label>NO2: <input id="no2" required></label><br>
+    <label>NOx: <input id="nox" required></label><br>
+    <label>NH3: <input id="nh3" required></label><br>
+    <label>CO: <input id="co" required></label><br>
+    <label>SO2: <input id="so2" required></label><br>
+    <label>O3: <input id="o3" required></label><br>
+    <label>Benzene: <input id="benzene" required></label><br>
+    <label>Toluene: <input id="toluene" required></label><br>
+    <label>Xylene: <input id="xylene" required></label><br>
+    <label>AQI: <input id="aqi" required></label><br><br>
+    <button type="submit">Get Recommendations</button>
+  </form>
+
+  <div id="results"></div>
+</body>
+</html>
