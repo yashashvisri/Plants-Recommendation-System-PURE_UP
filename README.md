@@ -76,9 +76,4 @@ This project successfully met its design goals, achieving:
 
 ---
 
-## 👤 Author
-
-* **Yashashvi Srivastava**
-* [LinkedIn](www.linkedin.com/in/yashashvi-srivastava-681b35251)
-* [Email](yashashvisrivastava674@gmail.com)
 
